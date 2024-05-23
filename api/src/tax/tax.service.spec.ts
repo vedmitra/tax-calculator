@@ -16,7 +16,7 @@ describe('TaxService', () => {
     expect(service).toBeDefined();
   });
   it('should calculate tax for income <= $18,200', () => {
-    const { tax, superannuation: superAnnuation } = service.calculateTax({
+    const { tax, superAnnuation } = service.calculateTax({
       income: 18200,
       includeSuper: false,
       year: '2022-23',
@@ -25,7 +25,7 @@ describe('TaxService', () => {
     expect(superAnnuation).toBeCloseTo(1911, 2);
 
     // Income including super
-    const { tax: tax2, superannuation: superAnnuation2 } = service.calculateTax(
+    const { tax: tax2, superAnnuation: superAnnuation2 } = service.calculateTax(
       {
         income: 18200,
         includeSuper: true,
@@ -37,7 +37,7 @@ describe('TaxService', () => {
   });
 
   it('should calculate tax for income between $18,201 and $45,000', () => {
-    const { tax, superannuation: superAnnuation } = service.calculateTax({
+    const { tax, superAnnuation } = service.calculateTax({
       income: 30000,
       includeSuper: false,
       year: '2022-23',
@@ -46,7 +46,7 @@ describe('TaxService', () => {
     expect(superAnnuation).toBeCloseTo(3150, 2);
 
     // Income including super
-    const { tax: tax2, superannuation: superAnnuation2 } = service.calculateTax(
+    const { tax: tax2, superAnnuation: superAnnuation2 } = service.calculateTax(
       {
         income: 30000,
         includeSuper: true,
@@ -58,7 +58,7 @@ describe('TaxService', () => {
   });
 
   it('should calculate tax for income between $45,001 and $120,000', () => {
-    const { tax, superannuation: superAnnuation } = service.calculateTax({
+    const { tax, superAnnuation } = service.calculateTax({
       income: 60000,
       includeSuper: false,
       year: '2022-23',
@@ -67,7 +67,7 @@ describe('TaxService', () => {
     expect(superAnnuation).toBeCloseTo(6300, 2);
 
     // Income including super
-    const { tax: tax2, superannuation: superAnnuation2 } = service.calculateTax(
+    const { tax: tax2, superAnnuation: superAnnuation2 } = service.calculateTax(
       {
         income: 60000,
         includeSuper: true,
@@ -79,7 +79,7 @@ describe('TaxService', () => {
   });
 
   it('should calculate tax for income between $120,001 and $180,000', () => {
-    const { tax, superannuation: superAnnuation } = service.calculateTax({
+    const { tax, superAnnuation } = service.calculateTax({
       income: 150000,
       includeSuper: false,
       year: '2022-23',
@@ -88,7 +88,7 @@ describe('TaxService', () => {
     expect(superAnnuation).toBeCloseTo(15750, 2);
 
     // Income including super
-    const { tax: tax2, superannuation: superAnnuation2 } = service.calculateTax(
+    const { tax: tax2, superAnnuation: superAnnuation2 } = service.calculateTax(
       {
         income: 150000,
         includeSuper: true,
@@ -100,7 +100,7 @@ describe('TaxService', () => {
   });
 
   it('should calculate tax for income over $180,001', () => {
-    const { tax, superannuation: superAnnuation } = service.calculateTax({
+    const { tax, superAnnuation } = service.calculateTax({
       income: 200000,
       includeSuper: false,
       year: '2022-23',
@@ -109,7 +109,7 @@ describe('TaxService', () => {
     expect(superAnnuation).toBeCloseTo(21000, 2);
 
     // Income including super
-    const { tax: tax2, superannuation: superAnnuation2 } = service.calculateTax(
+    const { tax: tax2, superAnnuation: superAnnuation2 } = service.calculateTax(
       {
         income: 200000,
         includeSuper: true,
