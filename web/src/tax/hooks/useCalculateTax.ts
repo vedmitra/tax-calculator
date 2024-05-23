@@ -8,7 +8,7 @@ type calculateTaxType = {
 };
 const API_URL = '/tax/calculate';
 export const useCalculateTax = () => {
-  const { request } = useApi();
+  const { request, loading, error } = useApi();
   const calculateTax = (data: calculateTaxType) => {
     return request(API_URL, {
       method: 'POST',
@@ -18,5 +18,5 @@ export const useCalculateTax = () => {
       body: JSON.stringify(data),
     });
   };
-  return { calculateTax };
+  return { calculateTax, loading, error };
 };
