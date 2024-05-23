@@ -1,29 +1,21 @@
-// src/calculator/components/Calculator.tsx
 import React, { useState } from 'react';
-import { Spacer } from '../../components/Spacer';
 import { useCalculateTax } from '../hooks/useCalculateTax';
+import { TaxResult } from './TaxResult';
 
 const Calculator: React.FC = () => {
   const [superPrecentage, setSuperPrecentage] = useState<number>(10.5);
   const [income, setIncome] = useState<number>(0);
   const [isGrossPlusSuper, setIsGrossPlusSuper] = useState<boolean>(false);
   const [taxYear, setTaxYear] = useState<string>('2022-23');
-  const [results, setResults] = useState<{
-    tax: number;
-    netIncome: number;
-    superAnnuation: number;
-  } | null>(null);
 
-  const { calculateTax, loading, error } = useCalculateTax();
-
+  const { calculateTax, loading, error, taxes = null } = useCalculateTax();
+  console.log(taxes);
   const calculate = () => {
     calculateTax({
       income,
       year: taxYear,
       superannuationRate: superPrecentage,
       includeSuper: isGrossPlusSuper,
-    }).then((results) => {
-      console.log(results);
     });
   };
 
@@ -95,23 +87,12 @@ const Calculator: React.FC = () => {
               Calculate
             </button>
           </div>
-          {results && (
-            <div>
-              <h2 className="text-lg font-bold mt-4">Results:</h2>
-              <p>Superannuation Amount: ${results.superAnnuation.toFixed(2)}</p>
-              <p>Gross Amount: ${income.toFixed(2)}</p>
-              <p>
-                Gross + Superannuation Amount: $
-                {results.netIncome.toFixed(2) + results.superAnnuation}
-              </p>
-              <p>Tax Amount: ${results.tax.toFixed(2)}</p>
-              <p>Net Amount: ${results.netIncome.toFixed(2)}</p>
-              <p>
-                Net + Superannuation Amount: ${results.netIncome.toFixed(2)}
-              </p>
-            </div>
-          )}
         </div>
+        {!loading && !error && taxes && (
+          <div className="mt-20">
+            <TaxResult {...taxes} />
+          </div>
+        )}
       </div>
     </div>
   );
