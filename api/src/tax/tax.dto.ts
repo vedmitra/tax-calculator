@@ -1,12 +1,7 @@
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsNumberString,
-  IsOptional,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 
 export class CalculateInput {
-  @IsNumberString()
+  @IsNumber()
   @IsNotEmpty()
   income: string;
 
@@ -17,7 +12,7 @@ export class CalculateInput {
   includeSuper: boolean;
 
   @IsOptional()
-  @IsNumberString()
+  @IsNumber()
   superannuationRate?: string;
 }
 

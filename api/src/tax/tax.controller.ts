@@ -1,7 +1,7 @@
 import {
+  Body,
   Controller,
-  Get,
-  Query,
+  Post,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -12,20 +12,21 @@ import { CalculateInput, CalculateOutput } from './tax.dto';
 export class TaxController {
   constructor(private readonly taxService: TaxService) {}
 
-  @Get('calculate')
+  @Post('calculate')
   @UsePipes(new ValidationPipe({ transform: true }))
-  async calculateTax(@Query() query: CalculateInput): Promise<CalculateOutput> {
-    const incomeNumber = parseFloat(query.income);
+  async calculateTax(@Body() body: CalculateInput): Promise<CalculateOutput> {
+    console.log(body);
+    const incomeNumber = parseFloat(body.income);
 
-    const superannuationRateNumber = query.superannuationRate
-      ? parseFloat(query.superannuationRate)
+    const superannuationRateNumber = body.superannuationRate
+      ? parseFloat(body.superannuationRate)
       : null;
 
     const taxObject = await this.taxService.calculateTax({
       income: incomeNumber,
       superannuationRate: superannuationRateNumber,
-      year: query.year,
-      includeSuper: query.includeSuper,
+      year: body.year,
+      includeSuper: body.includeSuper,
     });
 
     return {
