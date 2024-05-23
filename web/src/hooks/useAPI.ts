@@ -47,6 +47,7 @@ const useApi = <T>(): ApiHook<T> => {
       } catch (err) {
         setLoading(false);
         setError((err as Error).message);
+        // TODO: Proper error handling components needs to be created.
         throw err;
       }
     },
