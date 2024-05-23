@@ -20,4 +20,6 @@ export class CalculateOutput {
   tax: number;
   netIncome: number;
   superannuation: number;
+  grossIncome: number;
+  isIncomeIncludingSuper: boolean;
 }

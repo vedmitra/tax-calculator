@@ -7,6 +7,14 @@ type TaxInput = {
   superannuationRate?: number;
 };
 
+type TaxOutput = {
+  tax: number;
+  superannuation: number;
+  netIncome: number;
+  income: number;
+  isIncomeIncludingSuper: boolean;
+};
+
 type TaxRate = {
   baseLimit: number;
   upperLimit: number;
@@ -22,11 +30,7 @@ type SuperRate = {
 @Injectable()
 export class TaxService {
   // TODO: Error handling and logging.
-  calculateTax(input: TaxInput): {
-    tax: number;
-    superannuation: number;
-    netIncome: number;
-  } {
+  calculateTax(input: TaxInput): TaxOutput {
     const { income, year, includeSuper, superannuationRate } = input;
     const superRate = superannuationRate || this.getSuperRate(year);
     if (superRate === null) {
@@ -60,7 +64,13 @@ export class TaxService {
     }
     const netIncome = taxableIncome - tax;
 
-    return { tax, superannuation: superAnnuation, netIncome };
+    return {
+      tax,
+      superannuation: superAnnuation,
+      netIncome,
+      income,
+      isIncomeIncludingSuper: includeSuper,
+    };
   }
 
   private getTaxRates(): TaxRate[] {
